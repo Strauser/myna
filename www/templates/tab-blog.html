@@ -1,0 +1,13 @@
+<ion-view view-title="Blog">
+    <ion-content class="padding">
+        <ion-list>
+            <ion-item class="postItem item-remove-animate item-icon-right" ng-repeat="post in posts" type="item-text-wrap" href="#/tab/posts/{{post.ID}}">
+                <img class="mini-img " ng-src="{{getFirstImg(post)}}">
+                <p ng-bind-html="post.shortContent"></p>
+                <a>Lire la suite</a>
+            </ion-item>
+        </ion-list>
+
+        <button class="btn btn-primary col-xs-12" ng-click="more()" ng-show="!posts.isEmpty">Plus d'articles</button>
+    </ion-content>
+</ion-view>

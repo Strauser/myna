@@ -1,0 +1,28 @@
+/* Empty. Add your own CSS if you like */
+img {
+    width: 250px;
+}
+
+ion-item.postItem {
+    float: left;
+    border: 1px solid lightGrey;
+    padding: 5px;
+    margin: 5px;
+    width: 100%;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.25); // iOS <4.3 & Android <4.1
+    box-shadow: 0 1px 3px rgba(0,0,0,.25);
+}
+
+ion-item.postItem img {
+    float: left;
+    margin-right: 10px;
+    width: 150px;
+}
+
+ion-item.postItem.item-complex a.item-content {
+    padding: 0;
+}
+
+.item-content p {
+    white-space: normal;
+}
