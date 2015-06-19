@@ -60,4 +60,20 @@ angular.module('starter.services', [])
         }
     };
 
+}])
+
+.factory('ytService', ['$http', function($http) {
+
+    var channelId = "UCW3IEcIYhBFJJ5OFE54OMWA";
+    var apikey = "AIzaSyBnIXOHSlUN9IOhf7vckZZLEnXbifSxVR8";
+
+    return {
+        all: function(page) {
+            return $http.get("https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&channelId=" + channelId + "&key=" + apikey + "&pageToken=" + page);
+        },
+        video: function(id) {
+            return $http.get("https://www.googleapis.com/youtube/v3/videos?part=snippet+%2C+player&id=" + id + "&key=" + apikey);
+        }
+    };
+
 }]);

@@ -1,24 +1,13 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
-
-.controller('ChatsCtrl', function($scope, Chats) {
-    $scope.chats = Chats.all();
-    $scope.remove = function(chat) {
-        Chats.remove(chat);
-    }
+.controller('TabsCtrl', function($scope, $rootScope, $state) {
+    $rootScope.$on('$ionicView.beforeEnter', function() {
+        $rootScope.hideTabs = false;
+        if ($state.current.name === 'tab.video') {
+            $rootScope.hideTabs = true;
+        }
+    });
 })
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-    $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-    $scope.settings = {
-        enableFriends: true
-    };
-})
-
 
 .controller('blogCtrl', ['$scope', '$sce', 'blogService', function($scope, $sce, blogService) {
 
@@ -44,7 +33,6 @@ angular.module('starter.controllers', [])
         });
     }
 
-
     firstLoad = function(page) {
         nextPosts = [];
         blogService.all(page).success( function(data) {
@@ -55,6 +43,11 @@ angular.module('starter.controllers', [])
         });
     }
 
+    $scope.more = function() {
+        CURRENT_PAGE += 1;
+        $scope.refresh(CURRENT_PAGE);
+    }
+
     processHtml = function(post) {
         post.shortContent = post.content
             .replace(/<(?:.|\n)*?>/gm, '')
@@ -63,11 +56,6 @@ angular.module('starter.controllers', [])
             .substring(1, 100)
             + "...";
         return post;
-    }
-
-    $scope.more = function() {
-        CURRENT_PAGE += 1;
-        $scope.refresh(CURRENT_PAGE);
     }
 
     $scope.getFirstImg = function(post) {
@@ -90,5 +78,56 @@ angular.module('starter.controllers', [])
         $scope.post = data;
         $scope.post.content = $sce.trustAsHtml(post.content);
     });
+
+}])
+
+.controller('ytCtrl', ['$scope', 'ytService', function($scope, ytService) {
+
+    var NEXT_PAGE = "";
+
+    var nextVids = [];
+    $scope.vids = [];
+
+    $scope.refresh = function(page) {
+        nextVids.forEach( function(vid) {
+            $scope.vids.push(vid);
+        })
+
+        prepareVids(page);
+    }
+
+    prepareVids = function(page) {
+        nextVids = [];
+        ytService.all(page).success( function(data) {
+            NEXT_PAGE = data.nextPageToken;
+            data.items.forEach(function(vid) {
+                nextVids.push(vid);
+            })
+        });
+    }
+
+    firstLoad = function() {
+        nextVids = [];
+        ytService.all("").success( function(data) {
+            NEXT_PAGE = data.nextPageToken;
+            data.items.forEach(function(vid) {
+                nextVids.push(vid);
+            })
+            $scope.more();
+        });
+    }
+
+    $scope.more = function() {
+        $scope.refresh(NEXT_PAGE);
+    }
+
+    firstLoad();
+
+}])
+
+
+.controller('vidCtrl', ['$scope', '$stateParams', '$sce', 'ytService', function($scope, $stateParams, $sce, ytService) {
+
+    $scope.url = "http://www.youtube.com/embed/" + $stateParams.vidId;
 
 }]);

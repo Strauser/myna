@@ -3,6 +3,10 @@ img {
     width: 250px;
 }
 
+ion-content div.scroll button {
+    margin-bottom: 20px;
+}
+
 ion-item.postItem {
     float: left;
     border: 1px solid lightGrey;
@@ -25,4 +29,20 @@ ion-item.postItem.item-complex a.item-content {
 
 .item-content p {
     white-space: normal;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe, .video-container object, .video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

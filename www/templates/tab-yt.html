@@ -1,0 +1,13 @@
+<ion-view view-title="Youtube">
+    <ion-content class="padding">
+        <ion-list>
+            <ion-item class="postItem item-remove-animate item-icon-right" ng-repeat="vid in vids" type="item-text-wrap" href="#/tab/yt/{{vid.id.videoId}}">
+                <img class="mini-img " ng-src="{{vid.snippet.thumbnails.medium.url}}">
+                {{vid.snippet.title}}
+                <a>Voir la vidéo</a>
+            </ion-item>
+        </ion-list>
+
+        <button class="btn btn-primary col-xs-12" ng-click="more()">Voir les anciennes videos</button>
+    </ion-content>
+</ion-view>
